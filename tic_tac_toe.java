@@ -9,7 +9,9 @@ class tic_tac_toe {
             { 6, 7, 2 }
     };
     public static int[] v = new int[9];
+    public static int[] c = new int[9];
     public static int counts = 0;
+    public static int con = 0;
 
     public static void print_board() {
         for (int i = 0; i < 3; i++) {
@@ -66,13 +68,22 @@ class tic_tac_toe {
     }
 
     public static void move() {
-        int move = 0;
+        int move = 0,move1 = 0;
         for (int i = 0; i < counts; i++) {
             for (int j = i + 1; j < counts; j++) {
                 move = 15 - v[i] - v[j];
-                if (move > 0 && move <= 9) {
+                move1 = 15 - c[i] - c[j];
+                if(move1 > 0 &&  move1 <= 9){
+                    if (find_r(move1) != -1 && find_c(move1) != -1 && ar[find_r(move1)][find_c(move1)] == ' ') {
+                        ar[find_r(move1)][find_c(move1)] = 'X';
+                        return;
+                    }
+                }
+                else if (move > 0 && move <= 9) {
                     if (find_r(move) != -1 && find_c(move) != -1 && ar[find_r(move)][find_c(move)] == ' ') {
                         ar[find_r(move)][find_c(move)] = 'X';
+                        c[con] = br[find_r(move)][find_c(move)];
+                        con++;
                         return;
                     }
                 }
@@ -82,6 +93,8 @@ class tic_tac_toe {
             for (int j = 0; j < 3; j++) {
                 if (ar[i][j] == ' ') {
                     ar[i][j] = 'X';
+                    c[con] = br[i][j];
+                    con++;
                     return;
                 }
             }
